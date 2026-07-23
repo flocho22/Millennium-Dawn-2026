@@ -1,0 +1,77 @@
+MD_2026_conflict_management = {
+	icon = generic_political_actions
+
+	allowed = {
+		has_global_flag = MD_2026_scenario
+		OR = {
+			original_tag = SOV
+			original_tag = UKR
+		}
+	}
+
+	visible = {
+		OR = {
+			has_war_with = SOV
+			has_war_with = UKR
+		}
+	}
+
+	MD_2026_probe_negotiations = {
+		icon = generic_prepare_civil_war
+		cost = 50
+		days_re_enable = 60
+
+		available = {
+			OR = {
+				has_war_with = SOV
+				has_war_with = UKR
+			}
+		}
+
+		complete_effect = {
+			add_to_variable = { MD_2026_negotiation_readiness = 10 }
+			clamp_variable = { var = MD_2026_negotiation_readiness min = 0 max = 100 }
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 5
+				check_variable = { MD_2026_war_exhaustion > 70 }
+			}
+		}
+	}
+
+	MD_2026_propose_armistice = {
+		icon = generic_political_actions
+		cost = 100
+		days_re_enable = 120
+
+		available = {
+			check_variable = { MD_2026_negotiation_readiness > 69 }
+			OR = {
+				has_war_with = SOV
+				has_war_with = UKR
+			}
+		}
+
+		complete_effect = {
+			if = {
+				limit = { original_tag = SOV }
+				UKR = { country_event = { id = md2026.20 days = 1 } }
+			}
+			else_if = {
+				limit = { original_tag = UKR }
+				SOV = { country_event = { id = md2026.20 days = 1 } }
+			}
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				check_variable = { MD_2026_war_exhaustion > 85 }
+			}
+		}
+	}
+}
