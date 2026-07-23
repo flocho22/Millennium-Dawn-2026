@@ -1,0 +1,25 @@
+ideas = {
+	country = {
+		MD_2026_russian_war_of_attrition = {
+			picture = sov_information_war_idea
+			modifier = {
+				war_support_factor = 0.10
+				consumer_goods_factor = 0.06
+				supply_consumption_factor = 0.10
+				planning_speed = -0.15
+				army_org_regain = -0.05
+			}
+		}
+
+		MD_2026_ukrainian_war_of_survival = {
+			picture = ukr_dronearmy_idea
+			modifier = {
+				war_support_factor = 0.15
+				army_core_defence_factor = 0.15
+				consumer_goods_factor = 0.08
+				supply_consumption_factor = 0.08
+				planning_speed = -0.10
+			}
+		}
+	}
+}
