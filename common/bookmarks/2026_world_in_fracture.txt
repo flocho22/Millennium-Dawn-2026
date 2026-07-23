@@ -100,6 +100,9 @@ bookmarks = {
 
 		effect = {
 			set_global_flag = MD_2026_scenario
+			USA = {
+				country_event = { id = md2026.1 hours = 6 }
+			}
 			randomize_weather = 20260101
 		}
 	}
