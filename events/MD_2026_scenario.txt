@@ -137,10 +137,101 @@ country_event = {
 			set_country_flag = MD_2026_cuba_pressure
 		}
 
+		# Russia-Ukraine: conventional war with a deliberately coarse front.
+		# The existing MD states cannot reproduce village-level control without
+		# a destructive map overhaul, so Crimea and the pre-2022 separatist
+		# urban states stand in for the Russian-held portions of the front.
+		if = {
+			limit = {
+				SOV = { exists = yes }
+				UKR = { exists = yes }
+			}
+			if = {
+				limit = { country_exists = DPR }
+				SOV = { annex_country = { target = DPR transfer_troops = yes } }
+			}
+			if = {
+				limit = { country_exists = LPR }
+				SOV = { annex_country = { target = LPR transfer_troops = yes } }
+			}
+
+			SOV = {
+				set_variable = { MD_2026_war_intensity = 75 }
+				set_variable = { MD_2026_war_exhaustion = 55 }
+				set_variable = { MD_2026_foreign_support = 20 }
+				set_variable = { MD_2026_escalation_risk = 65 }
+				set_variable = { MD_2026_negotiation_readiness = 25 }
+				add_ideas = MD_2026_russian_war_of_attrition
+
+				if = {
+					limit = { NOT = { has_war_with = UKR } }
+					declare_war_on = {
+						target = UKR
+						type = MD_2026_russo_ukrainian_war
+					}
+				}
+
+				set_state_controller = 669
+				set_state_controller = 693
+				set_state_controller = 1075
+			}
+
+			UKR = {
+				set_variable = { MD_2026_war_intensity = 75 }
+				set_variable = { MD_2026_war_exhaustion = 65 }
+				set_variable = { MD_2026_foreign_support = 80 }
+				set_variable = { MD_2026_escalation_risk = 65 }
+				set_variable = { MD_2026_negotiation_readiness = 25 }
+				add_ideas = MD_2026_ukrainian_war_of_survival
+			}
+		}
+
 		every_country = {
 			limit = { is_ai = no }
 			country_event = { id = md2026.2 days = 1 }
 		}
+	}
+}
+
+# Bilateral armistice proposal. This ends the active war without invoking a
+# total-conquest peace conference; territorial settlement is deferred to the
+# future negotiated-peace expansion.
+country_event = {
+	id = md2026.20
+	title = md2026.20.t
+	desc = md2026.20.d
+	picture = GFX_negotiations
+	is_triggered_only = yes
+
+	option = {
+		name = md2026.20.a
+		ai_chance = {
+			base = 10
+			modifier = {
+				add = 70
+				check_variable = { MD_2026_war_exhaustion > 80 }
+			}
+			modifier = {
+				add = 20
+				check_variable = { MD_2026_negotiation_readiness > 85 }
+			}
+		}
+		white_peace = FROM
+		set_truce = { target = FROM days = 365 }
+		remove_ideas = MD_2026_russian_war_of_attrition
+		remove_ideas = MD_2026_ukrainian_war_of_survival
+		FROM = {
+			remove_ideas = MD_2026_russian_war_of_attrition
+			remove_ideas = MD_2026_ukrainian_war_of_survival
+		}
+		set_global_flag = MD_2026_russo_ukrainian_armistice
+	}
+
+	option = {
+		name = md2026.20.b
+		ai_chance = { base = 30 }
+		add_to_variable = { MD_2026_negotiation_readiness = -15 }
+		clamp_variable = { var = MD_2026_negotiation_readiness min = 0 max = 100 }
 	}
 }
 
