@@ -1,0 +1,35 @@
+on_actions = {
+	on_monthly = {
+		effect = {
+			if = {
+				limit = { has_global_flag = MD_2026_scenario_initialized }
+
+				SOV = {
+					if = {
+						limit = { has_war_with = UKR }
+						add_to_variable = { MD_2026_war_exhaustion = 1 }
+						add_to_variable = { MD_2026_negotiation_readiness = 0.5 }
+						clamp_variable = { var = MD_2026_war_exhaustion min = 0 max = 100 }
+						clamp_variable = { var = MD_2026_negotiation_readiness min = 0 max = 100 }
+					}
+					else = {
+						remove_ideas = MD_2026_russian_war_of_attrition
+					}
+				}
+
+				UKR = {
+					if = {
+						limit = { has_war_with = SOV }
+						add_to_variable = { MD_2026_war_exhaustion = 1.25 }
+						add_to_variable = { MD_2026_negotiation_readiness = 0.5 }
+						clamp_variable = { var = MD_2026_war_exhaustion min = 0 max = 100 }
+						clamp_variable = { var = MD_2026_negotiation_readiness min = 0 max = 100 }
+					}
+					else = {
+						remove_ideas = MD_2026_ukrainian_war_of_survival
+					}
+				}
+			}
+		}
+	}
+}
