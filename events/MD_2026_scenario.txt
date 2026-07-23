@@ -1,0 +1,160 @@
+add_namespace = md2026
+
+# Initializes the 2026 bookmark after Millennium Dawn's normal startup systems.
+country_event = {
+	id = md2026.1
+	is_triggered_only = yes
+	hidden = yes
+
+	trigger = {
+		has_global_flag = MD_2026_scenario
+		NOT = { has_global_flag = MD_2026_scenario_initialized }
+	}
+
+	immediate = {
+		set_global_flag = MD_2026_scenario_initialized
+
+		USA = {
+			set_temp_variable = { rul_party_temp = 1 }
+			change_ruling_party_effect = yes
+			set_variable = { current_term = 2 }
+			create_country_leader = {
+				name = "Donald Trump"
+				desc = "DONALD_TRUMP_LEADER_DESC"
+				picture = "Donald_Trump.dds"
+				ideology = conservatism
+				traits = {
+					western_conservatism
+					businessman
+					narcissist
+					greedy
+					emotional
+				}
+			}
+			set_country_flag = MD_2026_trump_second_term
+		}
+
+		SOV = {
+			set_temp_variable = { rul_party_temp = 6 }
+			change_ruling_party_effect = yes
+			create_country_leader = {
+				name = "Vladimir Putin"
+				picture = "Vladimir_Putin_older.dds"
+				expire = "2036.1.1"
+				ideology = Conservative
+				traits = {
+					emerging_Conservative
+					spy
+					geopolitical_thinker
+					political_dancer
+					sly
+					rational
+				}
+			}
+			set_country_flag = MD_2026_wartime_russia
+		}
+
+		UKR = {
+			set_temp_variable = { rul_party_temp = 3 }
+			change_ruling_party_effect = yes
+			create_country_leader = {
+				name = "Volodymyr Zelensky"
+				picture = "gfx/leaders/UKR/Volodymyr_Zelensky_1.dds"
+				ideology = socialism
+				traits = {
+					western_socialism
+					humble
+				}
+			}
+			set_country_flag = MD_2026_wartime_ukraine
+		}
+
+		PER = {
+			set_temp_variable = { rul_party_temp = 9 }
+			change_ruling_party_effect = yes
+			create_country_leader = {
+				name = "Sayyid Ali Hosseini Khamenei"
+				picture = "sayyid_ali_hosseini_khamenei.dds"
+				ideology = Vilayat_e_Faqih
+				desc = "PER_khamenei_desc"
+				traits = {
+					emerging_Vilayat_e_Faqih
+					cleric
+					geopolitical_thinker
+					stubborn
+					anti_zionist
+				}
+			}
+			set_country_flag = MD_2026_iran_pressure
+		}
+
+		ISR = {
+			set_temp_variable = { rul_party_temp = 1 }
+			change_ruling_party_effect = yes
+			create_country_leader = {
+				name = "Benjamin Netanyahu"
+				picture = "Benjamin_Netanyahu.dds"
+				ideology = conservatism
+				traits = {
+					western_conservatism
+					corruptible
+					economic_managers
+					military_career
+				}
+			}
+			set_country_flag = ISR_bibi_power
+			set_country_flag = MD_2026_regional_war
+		}
+
+		VEN = {
+			set_temp_variable = { rul_party_temp = 5 }
+			change_ruling_party_effect = yes
+			create_country_leader = {
+				name = "Nicolás Maduro"
+				picture = "Nicolas_Maduro.dds"
+				ideology = anarchist_communism
+				traits = {
+					emerging_anarchist_communism
+					union_man
+					career_politician
+				}
+			}
+			set_country_flag = MD_2026_venezuela_crisis
+		}
+
+		CUB = {
+			set_temp_variable = { rul_party_temp = 4 }
+			change_ruling_party_effect = yes
+			create_country_leader = {
+				name = "Miguel Díaz-Canel"
+				picture = "miguel_diaz_canel.dds"
+				ideology = Communist-State
+				traits = {
+					emerging_Communist-State
+					career_politician
+				}
+			}
+			set_country_flag = MD_2026_cuba_pressure
+		}
+
+		every_country = {
+			limit = { is_ai = no }
+			country_event = { id = md2026.2 days = 1 }
+		}
+	}
+}
+
+# Player-facing confirmation that the new bookmark initialized correctly.
+country_event = {
+	id = md2026.2
+	title = md2026.2.t
+	desc = md2026.2.d
+	picture = GFX_USA_generic
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = md2026.2.a
+		set_country_flag = MD_2026_briefing_read
+	}
+}
